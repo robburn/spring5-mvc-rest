@@ -20,4 +20,6 @@ public interface CustomerMapper {
         return CUSTOMER_URL_ROOT + customer.getId().toString();
     }
 
+    Customer customerDtoToCustomer(CustomerDTO customerDTO);
+
 }
