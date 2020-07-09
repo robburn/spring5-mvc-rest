@@ -27,7 +27,6 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-//                    customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -37,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO getCustomerById(Long id) {
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
-                .orElseThrow(RuntimeException::new); //todo implement better exception handling
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -73,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastname(customerDTO.getLastname());
             }
             return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
-        }).orElseThrow(RuntimeException::new); //todo implement bettter exception handling
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
