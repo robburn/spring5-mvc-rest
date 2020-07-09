@@ -28,8 +28,8 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
     public static final String NAME = "Joe";
     public static final String LAST_NAME = "Newman";
     public static final long ID = 1L;
-    public static final String CUSTOMER_URL = "/api/v1/customers/1";
-    public static final String CUSTOMER_URL_ROOT = "/api/v1/customers/";
+    public static final String CUSTOMER_URL_ROOT = CustomerController.BASE_URL + "/";
+    public static final String CUSTOMER_URL = CUSTOMER_URL_ROOT + "/1";
     @Mock
     CustomerService customerService;
 
@@ -55,13 +55,13 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
         CustomerDTO customer2 = new CustomerDTO();
         customer2.setFirstname("Bob");
         customer2.setLastname("Boberton");
-        customer2.setCustomerUrl("/api/v1/customer/2");
+        customer2.setCustomerUrl(CUSTOMER_URL_ROOT + "2");
 
         List<CustomerDTO> customers = Arrays.asList(customer1, customer2);
 
         when(customerService.getAllCustomers()).thenReturn(customers);
 
-        mockMvc.perform(get("/api/v1/customers/")
+        mockMvc.perform(get(CUSTOMER_URL_ROOT)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customers", hasSize(2)));
@@ -76,7 +76,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest {
 
         when(customerService.getCustomerByLastName(anyString())).thenReturn(customer1);
 
-        mockMvc.perform(get("/api/v1/customers/lastname/" + LAST_NAME)
+        mockMvc.perform(get( CUSTOMER_URL_ROOT + "lastname/" + LAST_NAME)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo(NAME)))

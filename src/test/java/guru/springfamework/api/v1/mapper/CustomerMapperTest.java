@@ -1,6 +1,7 @@
 package guru.springfamework.api.v1.mapper;
 
 import guru.springfamework.api.v1.model.CustomerDTO;
+import guru.springfamework.controllers.v1.CustomerController;
 import guru.springfamework.domain.Customer;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class CustomerMapperTest {
     public static final String NAME = "Joe";
     public static final String LAST_NAME = "Newman";
     public static final long ID = 1L;
-    public static final String CUSTOMER_URL_ROOT = "/api/v1/customer/";
+    public static final String CUSTOMER_URL_ROOT = CustomerController.BASE_URL + "/";
     CustomerMapper customerMapper = CustomerMapper.INSTANCE;
 
     @Test
